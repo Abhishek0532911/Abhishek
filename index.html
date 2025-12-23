@@ -1,19 +1,47 @@
 
 
 
+
+
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="UTF-8" />
+<title>User Registration</title>
+<!-- 1️⃣ DIGITAL DATA LAYER (SOURCE FOR DATA ELEMENTS) -->
 <script>
    window.digitalData = {
      page: {
        pageName: "User Registration Page",
-       siteSection: "Registration",
-       siteSubsection: "User Form"
+       pageURL: window.location.href
      },
      customer: {
        loginStatus: "LoggedOut"
+     },
+     orderDetails: {
+       ID: "",
+       Type: ""
      }
    };
 </script>
-<!-- Adobe Launch script MUST come AFTER -->
+<!-- 2️⃣ ADOBE LAUNCH (AEP WEB SDK) -->
 <script src="https://assets.adobedtm.com/e72b4113c11a/f11e3f6c843b/launch-008ef739fd51-development.min.js" async></script>
 </head>
+<body>
+<h2>User Registration</h2>
+<input type="text" placeholder="Name" />
+<input type="email" placeholder="Email" />
+<button id="registerBtn">Register</button>
+<!-- 3️⃣ USER ACTION UPDATES DATA LAYER -->
+<script>
+   document.getElementById("registerBtn").addEventListener("click", function () {
+     // Simulating backend values
+     digitalData.customer.loginStatus = "LoggedIn";
+     digitalData.orderDetails.ID = "ORD_" + Date.now();
+     digitalData.orderDetails.Type = "PrePaid";
+     console.log("digitalData updated:", digitalData);
+   });
+</script>
+</body>
+</html>
