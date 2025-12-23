@@ -1,111 +1,19 @@
 
-<!DOCTYPE html>
-<html lang="en">
+
+
 <head>
-<meta charset="UTF-8" />
-<title>User Registration | Adobe Analytics Demo</title>
-<!-- ========================= -->
-<!-- ADOBE LAUNCH SCRIPT HERE -->
-<!-- ========================= -->
+<script>
+   window.digitalData = {
+     page: {
+       pageName: "User Registration Page",
+       siteSection: "Registration",
+       siteSubsection: "User Form"
+     },
+     customer: {
+       loginStatus: "LoggedOut"
+     }
+   };
+</script>
+<!-- Adobe Launch script MUST come AFTER -->
 <script src="https://assets.adobedtm.com/e72b4113c11a/f11e3f6c843b/launch-008ef739fd51-development.min.js" async></script>
-<style>
-   body {
-     font-family: Arial, sans-serif;
-     background: #f4f6f8;
-     margin: 0;
-     padding: 0;
-   }
-   .container {
-     max-width: 600px;
-     margin: 60px auto;
-     background: #ffffff;
-     padding: 30px;
-     border-radius: 6px;
-     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-   }
-   h2 {
-     text-align: center;
-     margin-bottom: 25px;
-   }
-   label {
-     font-weight: bold;
-   }
-   input {
-     width: 100%;
-     padding: 10px;
-     margin: 8px 0 15px 0;
-     border: 1px solid #ccc;
-     border-radius: 4px;
-   }
-   button {
-     width: 100%;
-     padding: 12px;
-     background: #0070f3;
-     color: #fff;
-     border: none;
-     border-radius: 4px;
-     cursor: pointer;
-     font-size: 16px;
-   }
-   .secondary-buttons {
-     display: flex;
-     justify-content: space-between;
-     margin-top: 15px;
-   }
-   .secondary-buttons button {
-     width: 48%;
-     background: #333;
-   }
-</style>
 </head>
-<body>
-<script>
- /* ================================
-    DIGITAL DATA LAYER (IMPORTANT)
-    ================================ */
- window.digitalData = {
-   page: {
-     pageName: "User Registration Page",
-     siteSection: "Registration",
-     siteSubsection: "User Form"
-   },
-   customer: {
-     loginStatus: "LoggedOut"
-   },
-   orderDetails: {
-     orderId: "",
-     orderType: ""
-   }
- };
-</script>
-<div class="container">
-<h2>User Registration</h2>
-<label for="name">Name</label>
-<input type="text" id="name" placeholder="Enter name" />
-<label for="email">Email</label>
-<input type="email" id="email" placeholder="Enter email" />
-<button id="registerBtn">Register</button>
-<div class="secondary-buttons">
-<button id="learnMoreBtn">Learn More</button>
-<button id="contactUsBtn">Contact Us</button>
-</div>
-</div>
-<script>
- /* ================================
-    EVENTS FOR ANALYTICS TESTING
-    ================================ */
- document.getElementById("registerBtn").addEventListener("click", function () {
-   digitalData.customer.loginStatus = "Registered";
-   digitalData.orderDetails.orderId = "ORD-" + Math.floor(Math.random() * 100000);
-   digitalData.orderDetails.orderType = "Registration";
-   console.log("Register Clicked", digitalData);
- });
- document.getElementById("learnMoreBtn").addEventListener("click", function () {
-   console.log("Learn More Clicked");
- });
- document.getElementById("contactUsBtn").addEventListener("click", function () {
-   console.log("Contact Us Clicked");
- });
-</script>
-</body>
-</html>
