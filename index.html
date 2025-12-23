@@ -1,14 +1,10 @@
 
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <title>User Registration</title>
-<!-- DATA LAYER -->
+<!-- ================= DATA LAYER (MUST LOAD FIRST) ================= -->
 <script>
    window.digitalData = {
      page: {
@@ -23,23 +19,34 @@
        Type: ""
      }
    };
+   console.log("digitalData on load:", window.digitalData);
 </script>
-<!-- ADOBE LAUNCH -->
+<!-- ================= ADOBE LAUNCH ================= -->
+<!-- 🔴 REPLACE xxxx WITH YOUR REAL LAUNCH URL -->
 <script src="https://assets.adobedtm.com/e72b4113c11a/f11e3f6c843b/launch-008ef739fd51-development.min.js" async></script>
 </head>
 <body>
 <h2>User Registration</h2>
-<!-- 🔴 BUTTON ID MUST MATCH -->
-<button id="registerBtn">Register</button>
-<!-- SCRIPT AFTER BUTTON -->
+<!-- 🔴 type="button" IS CRITICAL -->
+<button type="button" id="registerBtn">Register</button>
+<!-- ================= CLICK LOGIC ================= -->
 <script>
-   document.getElementById("registerBtn").onclick = function () {
-     digitalData.customer.loginStatus = "LoggedIn";
-     digitalData.orderDetails.ID = "ORD_" + Date.now();
-     digitalData.orderDetails.Type = "PrePaid";
-     console.log("Order ID:", digitalData.orderDetails.ID);
-     console.log("Order Type:", digitalData.orderDetails.Type);
-   };
+   window.addEventListener("DOMContentLoaded", function () {
+     var btn = document.getElementById("registerBtn");
+     if (!btn) {
+       console.error("Register button NOT found");
+       return;
+     }
+     btn.addEventListener("click", function () {
+       // SET VALUES
+       window.digitalData.customer.loginStatus = "LoggedIn";
+       window.digitalData.orderDetails.ID = "ORD_" + Date.now();
+       window.digitalData.orderDetails.Type = "PrePaid";
+       // PROOF
+       alert("Register click executed");
+       console.log("UPDATED digitalData:", window.digitalData);
+     });
+   });
 </script>
 </body>
 </html>
