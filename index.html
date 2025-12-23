@@ -3,13 +3,12 @@
 
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <title>User Registration</title>
-<!-- 1️⃣ DIGITAL DATA LAYER (SOURCE FOR DATA ELEMENTS) -->
+<!-- DATA LAYER -->
 <script>
    window.digitalData = {
      page: {
@@ -25,23 +24,22 @@
      }
    };
 </script>
-<!-- 2️⃣ ADOBE LAUNCH (AEP WEB SDK) -->
+<!-- ADOBE LAUNCH -->
 <script src="https://assets.adobedtm.com/e72b4113c11a/f11e3f6c843b/launch-008ef739fd51-development.min.js" async></script>
 </head>
 <body>
 <h2>User Registration</h2>
-<input type="text" placeholder="Name" />
-<input type="email" placeholder="Email" />
+<!-- 🔴 BUTTON ID MUST MATCH -->
 <button id="registerBtn">Register</button>
-<!-- 3️⃣ USER ACTION UPDATES DATA LAYER -->
+<!-- SCRIPT AFTER BUTTON -->
 <script>
-   document.getElementById("registerBtn").addEventListener("click", function () {
-     // Simulating backend values
+   document.getElementById("registerBtn").onclick = function () {
      digitalData.customer.loginStatus = "LoggedIn";
      digitalData.orderDetails.ID = "ORD_" + Date.now();
      digitalData.orderDetails.Type = "PrePaid";
-     console.log("digitalData updated:", digitalData);
-   });
+     console.log("Order ID:", digitalData.orderDetails.ID);
+     console.log("Order Type:", digitalData.orderDetails.Type);
+   };
 </script>
 </body>
 </html>
