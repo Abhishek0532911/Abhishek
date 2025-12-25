@@ -1,52 +1,75 @@
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>User Registration</title>
-<!-- ================= DATA LAYER (MUST LOAD FIRST) ================= -->
-<script>
-   window.digitalData = {
-     page: {
-       pageName: "User Registration Page",
-       pageURL: window.location.href
-     },
-     customer: {
-       loginStatus: "LoggedOut"
-     },
-     orderDetails: {
-       ID: "123ED",
-       Type: "Cash"
-     }
-   };
-   console.log("digitalData on load:", window.digitalData);
-</script>
-<!-- ================= ADOBE LAUNCH ================= -->
-<!-- 🔴 REPLACE xxxx WITH YOUR REAL LAUNCH URL -->
+<title>Adobe Analytics – Data Rich Demo</title>
+<!-- 🔴 KEEP YOUR ORIGINAL ADOBE LAUNCH SCRIPT -->
 <script src="https://assets.adobedtm.com/e72b4113c11a/f11e3f6c843b/launch-008ef739fd51-development.min.js" async></script>
+
 </head>
-<body>
-<h2>User Registration</h2>
-<!-- 🔴 type="button" IS CRITICAL -->
-<button type="button" id="registerBtn">Register</button>
-<!-- ================= CLICK LOGIC ================= -->
+<body style="font-family: Arial, sans-serif; padding: 20px;">
+<h1>Adobe Analytics – User Interaction Simulation</h1>
+<p>Simulating multiple users, orders, and interactions for reporting.</p>
+<button onclick="trackRegister()" style="padding:10px 20px;">
+   Register
+</button>
 <script>
-   window.addEventListener("DOMContentLoaded", function () {
-     var btn = document.getElementById("registerBtn");
-     if (!btn) {
-       console.error("Register button NOT found");
-       return;
+   /**************************************
+    * 1. DATA SET (10–15 MEANINGFUL USERS)
+    **************************************/
+   var users = [
+     { order:"ORD1001", login:"LoggedIn",  payment:"Card", register:"Yes" },
+     { order:"ORD1002", login:"LoggedOut", payment:"UPI",  register:"No"  },
+     { order:"ORD1003", login:"LoggedIn",  payment:"Cash", register:"Yes" },
+     { order:"ORD1004", login:"LoggedIn",  payment:"Card", register:"No"  },
+     { order:"ORD1005", login:"LoggedOut", payment:"UPI",  register:"Yes" },
+     { order:"ORD1006", login:"LoggedIn",  payment:"Cash", register:"No"  },
+     { order:"ORD1007", login:"LoggedIn",  payment:"Card", register:"Yes" },
+     { order:"ORD1008", login:"LoggedOut", payment:"UPI",  register:"No"  },
+     { order:"ORD1009", login:"LoggedIn",  payment:"Card", register:"Yes" },
+     { order:"ORD1010", login:"LoggedOut", payment:"Cash", register:"Yes" },
+     { order:"ORD1011", login:"LoggedIn",  payment:"UPI",  register:"No"  },
+     { order:"ORD1012", login:"LoggedOut", payment:"Card", register:"Yes" }
+   ];
+   /**************************************
+    * 2. RANDOM USER PER PAGE LOAD
+    **************************************/
+   var user = users[Math.floor(Math.random() * users.length)];
+   /**************************************
+    * 3. SAFE ADOBE ANALYTICS TRACKING
+    **************************************/
+   function trackPageView() {
+     if (typeof s !== "undefined") {
+       s.clearVars();                 // ✅ prevents data pollution
+       s.eVar1 = user.order;          // OrderID
+       s.eVar2 = user.login;          // Login Status
+       s.eVar3 = user.payment;        // Payment Method
+       s.prop1 = user.register;       // Registration
+       s.events = "event1";           // Page View
+       s.t();                         // 🔥 SERVER CALL
      }
-     btn.addEventListener("click", function () {
-       // SET VALUES
-       window.digitalData.customer.loginStatus = "LoggedIn";
-       window.digitalData.orderDetails.ID = "ORD_" + Date.now();
-       window.digitalData.orderDetails.Type = "PrePaid";
-       // PROOF
-       alert("Register click executed");
-       console.log("UPDATED digitalData:", window.digitalData);
-     });
-   });
+   }
+   /**************************************
+    * 4. CLICK + REGISTRATION EVENT
+    **************************************/
+   function trackRegister() {
+     if (typeof s !== "undefined") {
+       s.clearVars();
+       s.eVar1 = user.order;
+       s.eVar2 = user.login;
+       s.eVar3 = user.payment;
+       s.prop1 = "Registered";
+       s.events = "event2,event3";    // Click + Registration
+       s.tl(true, "o", "Register Button Click");
+     }
+   }
+   /**************************************
+    * 5. FIRE PAGE VIEW AFTER LOAD
+    **************************************/
+   window.onload = trackPageView;
 </script>
 </body>
 </html>
