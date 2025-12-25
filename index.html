@@ -1,14 +1,43 @@
 
 
-
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Adobe Analytics – User Behavior Demo</title>
+<title>Adobe Analytics – Data Rich Demo</title>
+<style>
+   body {
+     font-family: Arial, sans-serif;
+     padding: 30px;
+     background: #f7f7f7;
+   }
+   h1 {
+     margin-bottom: 10px;
+   }
+   table {
+     border-collapse: collapse;
+     margin-top: 20px;
+     width: 60%;
+     background: #fff;
+   }
+   th, td {
+     border: 1px solid #ddd;
+     padding: 10px;
+     text-align: left;
+   }
+   th {
+     background-color: #f0f0f0;
+   }
+   button {
+     padding: 10px 16px;
+     font-size: 14px;
+     cursor: pointer;
+     margin-top: 15px;
+   }
+</style>
 <script>
    /*********************************
-    * DIGITAL DATA (DEFINED FIRST)
+    * DIGITAL DATA (LOAD FIRST)
     *********************************/
    window.digitalData = {};
    const users = [
@@ -21,35 +50,78 @@
      { id: "ORD1007", login: "LoggedOut", payment: "Cash", reg: "No" },
      { id: "ORD1008", login: "LoggedIn",  payment: "UPI",  reg: "Yes" },
      { id: "ORD1009", login: "LoggedOut", payment: "Card", reg: "No" },
-     { id: "ORD1010", login: "LoggedIn",  payment: "Cash", reg: "Yes" },
-     { id: "ORD1011", login: "LoggedIn",  payment: "UPI",  reg: "Yes" },
+     { id: "ORD1010", login: "LoggedIn", payment: "Cash", reg: "Yes" },
+     { id: "ORD1011", login: "LoggedIn", payment: "UPI", reg: "Yes" },
      { id: "ORD1012", login: "LoggedOut", payment: "Card", reg: "No" },
-     { id: "ORD1013", login: "LoggedIn",  payment: "UPI",  reg: "Yes" },
+     { id: "ORD1013", login: "LoggedIn", payment: "UPI", reg: "Yes" },
      { id: "ORD1014", login: "LoggedOut", payment: "Cash", reg: "No" },
-     { id: "ORD1015", login: "LoggedIn",  payment: "Card", reg: "Yes" }
+     { id: "ORD1015", login: "LoggedIn", payment: "Card", reg: "Yes" }
    ];
-   const user = users[Math.floor(Math.random() * users.length)];
-   digitalData.customer = {
-     orderId: user.id,
-     loginStatus: user.login,
-     paymentMethod: user.payment,
-     registrationStatus: user.reg
-   };
-   digitalData.orderDetails = {
-     ID: user.id,
-     Type: user.payment
-   };
-   digitalData.page = {
-     pageName: "Checkout",
-     pageURL: window.location.href
-   };
+   function generateUser() {
+     const user = users[Math.floor(Math.random() * users.length)];
+     digitalData.customer = {
+       orderId: user.id,
+       loginStatus: user.login,
+       paymentMethod: user.payment,
+       registrationStatus: user.reg
+     };
+     digitalData.orderDetails = {
+       ID: user.id,
+       Type: user.payment
+     };
+     digitalData.page = {
+       pageName: "Checkout",
+       pageURL: window.location.href
+     };
+     updateTable();
+   }
+   function updateTable() {
+     document.getElementById("orderId").innerText = digitalData.customer.orderId;
+     document.getElementById("loginStatus").innerText = digitalData.customer.loginStatus;
+     document.getElementById("paymentMethod").innerText = digitalData.customer.paymentMethod;
+     document.getElementById("registrationStatus").innerText = digitalData.customer.registrationStatus;
+     document.getElementById("pageName").innerText = digitalData.page.pageName;
+     document.getElementById("pageURL").innerText = digitalData.page.pageURL;
+   }
+   window.onload = generateUser;
 </script>
 <!-- ADOBE LAUNCH (AFTER digitalData EXISTS) -->
 <script src="https://assets.adobedtm.com/e72b4113c11a/f11e3f6c843b/launch-008ef739fd51-development.min.js" async></script>
+
 </head>
-<body style="font-family: Arial; padding: 40px;">
-<h1>Adobe Analytics – User Interaction Demo</h1>
-<p>This page simulates multiple users for analytics reporting.</p>
-<button onclick="location.reload()">Generate New User</button>
+<body>
+<h1>Adobe Analytics – User Validation View</h1>
+<p>This table shows the <strong>current user</strong> whose data is sent to Adobe Analytics.</p>
+<button onclick="generateUser()">Generate New User</button>
+<table>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+<tr>
+<td>Order ID</td>
+<td id="orderId"></td>
+</tr>
+<tr>
+<td>Login Status</td>
+<td id="loginStatus"></td>
+</tr>
+<tr>
+<td>Payment Method</td>
+<td id="paymentMethod"></td>
+</tr>
+<tr>
+<td>Registration Status</td>
+<td id="registrationStatus"></td>
+</tr>
+<tr>
+<td>Page Name</td>
+<td id="pageName"></td>
+</tr>
+<tr>
+<td>Page URL</td>
+<td id="pageURL"></td>
+</tr>
+</table>
 </body>
 </html>
