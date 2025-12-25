@@ -1,61 +1,55 @@
-<!DOCTYPE html>
+
+
+
+  <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Adobe Analytics Data-Rich Demo</title>
-<!-- ======================================
-      1️⃣ DIGITAL DATA LAYER (ABSOLUTELY FIRST)
-      ====================================== -->
+<title>Adobe Analytics – User Behavior Demo</title>
 <script>
-   window.digitalData = window.digitalData || {};
-   digitalData.customer = {};
-   digitalData.page = {};
-</script>
-<!-- ======================================
-      2️⃣ DATA SET (15 REALISTIC USERS)
-      ====================================== -->
-<script>
-   var users = [
-     { order:"ORD1001", login:"LoggedIn",  payment:"Card", register:"Yes", page:"Home" },
-     { order:"ORD1002", login:"LoggedOut", payment:"UPI",  register:"No",  page:"Product" },
-     { order:"ORD1003", login:"LoggedIn",  payment:"Cash", register:"Yes", page:"Checkout" },
-     { order:"ORD1004", login:"LoggedIn",  payment:"Card", register:"No",  page:"Search" },
-     { order:"ORD1005", login:"LoggedOut", payment:"UPI",  register:"Yes", page:"Home" },
-     { order:"ORD1006", login:"LoggedIn",  payment:"Cash", register:"No",  page:"Product" },
-     { order:"ORD1007", login:"LoggedIn",  payment:"Card", register:"Yes", page:"Checkout" },
-     { order:"ORD1008", login:"LoggedOut", payment:"UPI",  register:"No",  page:"Search" },
-     { order:"ORD1009", login:"LoggedIn",  payment:"Card", register:"Yes", page:"Home" },
-     { order:"ORD1010", login:"LoggedOut", payment:"Cash", register:"Yes", page:"Product" },
-     { order:"ORD1011", login:"LoggedIn",  payment:"UPI",  register:"No",  page:"Checkout" },
-     { order:"ORD1012", login:"LoggedIn",  payment:"Card", register:"Yes", page:"Search" },
-     { order:"ORD1013", login:"LoggedOut", payment:"UPI",  register:"No",  page:"Home" },
-     { order:"ORD1014", login:"LoggedIn",  payment:"Cash", register:"Yes", page:"Product" },
-     { order:"ORD1015", login:"LoggedIn",  payment:"Card", register:"No",  page:"Checkout" }
+   /*********************************
+    * DIGITAL DATA (DEFINED FIRST)
+    *********************************/
+   window.digitalData = {};
+   const users = [
+     { id: "ORD1001", login: "LoggedIn",  payment: "Card", reg: "Yes" },
+     { id: "ORD1002", login: "LoggedOut", payment: "UPI",  reg: "No" },
+     { id: "ORD1003", login: "LoggedIn",  payment: "Cash", reg: "Yes" },
+     { id: "ORD1004", login: "LoggedOut", payment: "Card", reg: "No" },
+     { id: "ORD1005", login: "LoggedIn",  payment: "UPI",  reg: "Yes" },
+     { id: "ORD1006", login: "LoggedIn",  payment: "Card", reg: "Yes" },
+     { id: "ORD1007", login: "LoggedOut", payment: "Cash", reg: "No" },
+     { id: "ORD1008", login: "LoggedIn",  payment: "UPI",  reg: "Yes" },
+     { id: "ORD1009", login: "LoggedOut", payment: "Card", reg: "No" },
+     { id: "ORD1010", login: "LoggedIn",  payment: "Cash", reg: "Yes" },
+     { id: "ORD1011", login: "LoggedIn",  payment: "UPI",  reg: "Yes" },
+     { id: "ORD1012", login: "LoggedOut", payment: "Card", reg: "No" },
+     { id: "ORD1013", login: "LoggedIn",  payment: "UPI",  reg: "Yes" },
+     { id: "ORD1014", login: "LoggedOut", payment: "Cash", reg: "No" },
+     { id: "ORD1015", login: "LoggedIn",  payment: "Card", reg: "Yes" }
    ];
-   var user = users[Math.floor(Math.random() * users.length)];
-   digitalData.customer.orderId = user.order;
-   digitalData.customer.loginStatus = user.login;
-   digitalData.customer.paymentMethod = user.payment;
-   digitalData.customer.registrationStatus = user.register;
-   digitalData.page.pageName = user.page;
-   digitalData.page.pageURL = window.location.href;
+   const user = users[Math.floor(Math.random() * users.length)];
+   digitalData.customer = {
+     orderId: user.id,
+     loginStatus: user.login,
+     paymentMethod: user.payment,
+     registrationStatus: user.reg
+   };
+   digitalData.orderDetails = {
+     ID: user.id,
+     Type: user.payment
+   };
+   digitalData.page = {
+     pageName: "Checkout",
+     pageURL: window.location.href
+   };
 </script>
-<!-- ======================================
-      3️⃣ ADOBE LAUNCH (MUST COME AFTER DATA)
-      ====================================== -->
-<!-- ✅ KEEP THIS EXACT POSITION -->
+<!-- ADOBE LAUNCH (AFTER digitalData EXISTS) -->
 <script src="https://assets.adobedtm.com/e72b4113c11a/f11e3f6c843b/launch-008ef739fd51-development.min.js" async></script>
-
 </head>
-<body>
-<h2>Adobe Analytics – Data Rich Demo</h2>
-<p>Each refresh generates a new user.</p>
+<body style="font-family: Arial; padding: 40px;">
+<h1>Adobe Analytics – User Interaction Demo</h1>
+<p>This page simulates multiple users for analytics reporting.</p>
 <button onclick="location.reload()">Generate New User</button>
-<!-- DEBUG (OPTIONAL – SAFE) -->
-<pre id="debug"></pre>
-<script>
-   document.getElementById("debug").innerText =
-     JSON.stringify(digitalData, null, 2);
-</script>
 </body>
 </html>
